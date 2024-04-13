@@ -1,7 +1,9 @@
 package edu.exam.examexercise.controller;
 
 import edu.exam.examexercise.entity.Delivery;
+import edu.exam.examexercise.errorhandling.OverweightException;
 import edu.exam.examexercise.service.DeliveryService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,10 +30,11 @@ public class DeliveryController {
 
 
     @PostMapping
-    public ResponseEntity<Delivery> create(@RequestBody Delivery delivery) {
-        if(delivery == null) {
-            return ResponseEntity.badRequest().build();
+    public ResponseEntity<?> create(@RequestBody Delivery delivery) {
+        try {
+            return ResponseEntity.ok(this.deliveryService.save(delivery));
+        } catch (OverweightException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-        return ResponseEntity.ok(this.deliveryService.save(delivery));
     }
 }
