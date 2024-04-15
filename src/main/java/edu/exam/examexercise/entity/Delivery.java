@@ -24,4 +24,5 @@ public class Delivery {
     private Van van;
     @OneToMany(fetch = FetchType.EAGER)
     private List<ProductOrder> productOrders = new ArrayList<>();
+    private Integer totalAmount;
 }

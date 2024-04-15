@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5174")
 @RestController
 @RequestMapping("/deliveries")
 public class DeliveryController {
@@ -36,5 +37,10 @@ public class DeliveryController {
         } catch (OverweightException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @GetMapping("/van/{vanId}")
+    public ResponseEntity<List<Delivery>> findByVanId(@PathVariable Long vanId) {
+        return ResponseEntity.ok(this.deliveryService.findByVanId(vanId));
     }
 }

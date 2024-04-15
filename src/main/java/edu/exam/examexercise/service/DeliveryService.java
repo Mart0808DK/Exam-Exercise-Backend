@@ -51,10 +51,15 @@ public class DeliveryService {
         delivery.setVan(van);
         delivery.setProductOrders(productOrders);
 
+        calculateTotalAmount(delivery);
         calculateWeightInVan(delivery);
 
         // Save and return the Delivery
         return deliveryRepository.save(delivery);
+    }
+
+    public List<Delivery> findByVanId(Long vanId) {
+        return deliveryRepository.findByVanId(vanId);
     }
 
     public void calculateWeightInVan(Delivery delivery) {
@@ -70,6 +75,13 @@ public class DeliveryService {
             throw new OverweightException("Total weight of products exceeds van's capacity");
         }
 
-        System.out.println("Total weight: " + totalWeight);
+    }
+
+    public void calculateTotalAmount(Delivery delivery) {
+        int totalAmount = 0;
+        for (ProductOrder productOrder : delivery.getProductOrders()) {
+            totalAmount += (int) (productOrder.getProduct().getPrice() * productOrder.getQuantity());
+        }
+        delivery.setTotalAmount(totalAmount);
     }
 }
