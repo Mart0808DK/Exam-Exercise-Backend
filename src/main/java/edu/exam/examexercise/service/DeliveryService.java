@@ -5,7 +5,7 @@ import edu.exam.examexercise.entity.ProductOrder;
 import edu.exam.examexercise.entity.Van;
 import edu.exam.examexercise.errorhandling.OverweightException;
 import edu.exam.examexercise.repository.DeliveryRepository;
-import edu.exam.examexercise.repository.ProductOderRepository;
+import edu.exam.examexercise.repository.ProductOrderRepository;
 import edu.exam.examexercise.repository.VanRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +16,10 @@ import java.util.stream.Collectors;
 @Service
 public class DeliveryService {
     private final DeliveryRepository deliveryRepository;
-    private final ProductOderRepository productOderRepository;
+    private final ProductOrderRepository productOderRepository;
     private final VanRepository vanRepository;
 
-    public DeliveryService(DeliveryRepository deliveryRepository, ProductOderRepository productOderRepository, VanRepository vanRepository) {
+    public DeliveryService(DeliveryRepository deliveryRepository, ProductOrderRepository productOderRepository, VanRepository vanRepository) {
         this.deliveryRepository = deliveryRepository;
         this.productOderRepository = productOderRepository;
         this.vanRepository = vanRepository;
