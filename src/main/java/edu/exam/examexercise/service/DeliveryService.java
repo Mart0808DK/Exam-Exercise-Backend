@@ -34,11 +34,11 @@ public class DeliveryService {
     }
 
     public Delivery save(Delivery delivery) {
-        // Fetch the Van from the repository using the provided ID
+
         Van van = vanRepository.findById(delivery.getVan().getId())
                 .orElseThrow(() -> new RuntimeException("Van not found"));
 
-        // Fetch the ProductOrders from the repository using the provided IDs
+
         List<Long> productOrderIds = delivery.getProductOrders().stream()
                 .map(ProductOrder::getId)
                 .collect(Collectors.toList());
@@ -47,14 +47,14 @@ public class DeliveryService {
             throw new RuntimeException("Some ProductOrders not found");
         }
 
-        // Set the fetched Van and ProductOrders to the Delivery
+
         delivery.setVan(van);
         delivery.setProductOrders(productOrders);
 
         calculateTotalAmount(delivery);
         calculateWeightInVan(delivery);
 
-        // Save and return the Delivery
+
         return deliveryRepository.save(delivery);
     }
 
@@ -67,10 +67,10 @@ public class DeliveryService {
         for (ProductOrder productOrder : delivery.getProductOrders()) {
             totalWeight += productOrder.getProduct().getWeightInGrams() * productOrder.getQuantity();
         }
-        // Convert weight to kilograms
+
         totalWeight /= 1000;
 
-        // Check if total weight exceeds van's capacity
+
         if (totalWeight > delivery.getVan().getCapacityInKg()) {
             throw new OverweightException("Total weight of products exceeds van's capacity");
         }
